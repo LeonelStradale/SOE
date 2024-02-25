@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthSocialiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+/* Google Auth */
+Route::get('/google-auth/redirect', [AuthSocialiteController::class, 'redirectGoogle'])
+    ->name('google-auth.redirect');
+
+Route::get('/google-auth/callback', [AuthSocialiteController::class, 'callbackGoogle'])
+    ->name('google-auth.callback');
