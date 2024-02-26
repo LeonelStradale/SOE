@@ -16,9 +16,9 @@ class AuthSocialiteController extends Controller
     public function callbackGoogle()
     {
         $user_google = Socialite::driver('google')->stateless()->user();
-        
+
         $name_parts = explode(" ", $user_google->name);
-        
+
         if (count($name_parts) == 4) {
             $first_name = $name_parts[0] . ' ' . $name_parts[1];
             $last_name = $name_parts[2] . ' ' . $name_parts[3];
@@ -28,11 +28,11 @@ class AuthSocialiteController extends Controller
         }
 
         $user = User::updateOrCreate([
-            'google_id' => $user_google->id,
+            'google_id' => $user_google->getId(),
         ], [
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'email' => $user_google->email,
+            'email' => $user_google->getEmail(),
         ]);
 
         Auth::login($user);
